@@ -24,12 +24,12 @@ class Game:
     def restart(self):
         self.word = random.choice(list(self.words))
 
-    def hint(self) -> List[Letter]:
-        return [Letter(' ', Status.MISS) for _ in self.word]
+    def hint(self) -> str:
+        return f'{len(self.word)} letters'
 
     def guess(self, guess: str) -> Tuple[bool, List[Letter]]:
         if len(guess) != len(self.word):
-            raise GuessError('wrong length')
+            raise GuessError(f'wrong length ({len(self.word)} letters)')
 
         if guess not in self.words:
             raise GuessError('not in the word list')

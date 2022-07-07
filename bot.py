@@ -34,7 +34,7 @@ class TestBot(irc.bot.SingleServerIRCBot):
 
     def on_welcome(self, c, e):
         c.join(self.channel)
-        c.privmsg(self.channel, format_wordle_hint(self.wordle.hint()))
+        c.privmsg(self.channel, self.wordle.hint())
 
     def on_privmsg(self, c, e):
         self.do_command(e, e.arguments[0])
@@ -58,10 +58,9 @@ class TestBot(irc.bot.SingleServerIRCBot):
             if correct:
                 nick = e.source.nick
                 self.wordle.restart()
-                hint = self.wordle.hint()
                 c.privmsg(
                     self.channel,
-                    f'Congrats, {nick} won, next word: {format_wordle_hint(hint)}'
+                    f'{format_wordle_hint(hint)}, congrats, {nick}, next word: {self.wordle.hint()}'
                 )
             else:
                 c.privmsg(self.channel, format_wordle_hint(hint))
