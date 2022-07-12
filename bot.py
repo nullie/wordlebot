@@ -40,12 +40,17 @@ class TestBot(irc.bot.SingleServerIRCBot):
         self.do_command(e, e.arguments[0])
 
     def on_pubmsg(self, c, e):
-        a = e.arguments[0].split(":", 1)
+        msg = e.arguments[0]
+        if irc.strings.lower(msg).startswith('w '):
+            self.do_command(e, msg[2:].strip())
+            return
+
+        a = msg.split(":", 1)
         if len(a) > 1 and irc.strings.lower(a[0]) == irc.strings.lower(
             self.connection.get_nickname()
         ):
             self.do_command(e, a[1].strip())
-        return
+            return
 
     def do_command(self, e, cmd):
         c = self.connection
