@@ -17,8 +17,9 @@ class Letter(NamedTuple):
 
 
 class Game:
-    def __init__(self) -> None:
-        self.words = set(load_good_words())
+    def __init__(self, word_dictionary: str, guess_dictionary) -> None:
+        self.words = set(load_good_words(word_dictionary))
+        self.guesses = set(load_good_words(guess_dictionary))
         self.word = random.choice(list(self.words))
 
     def restart(self):
@@ -28,10 +29,12 @@ class Game:
         return f'{len(self.word)} letters'
 
     def guess(self, guess: str) -> Tuple[bool, List[Letter]]:
+        guess = guess.lower()
+
         if len(guess) != len(self.word):
             raise GuessError(f'wrong length ({len(self.word)} letters)')
 
-        if guess not in self.words:
+        if guess not in self.guesses:
             raise GuessError('not in the word list')
 
         word_counts = Counter(self.word)
@@ -64,8 +67,8 @@ class GuessError(Exception):
     pass
 
 
-def load_good_words() -> Iterator[str]:
-    with open('/usr/share/dict/american-english') as f:
+def load_good_words(dictionary: str) -> Iterator[str]:
+    with open(dictionary) as f:
         for word in f:
             word = word.strip().lower()
             if re.fullmatch('[a-z]+', word) and 4 <= len(word) <= 8:
