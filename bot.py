@@ -20,7 +20,7 @@ def format_wordle_letter(letter: wordle.Letter):
         *BACKGROUND_COLORS[letter.status], '')
 
 
-def format_wordle_hint(guess: List[wordle.Letter]):
+def format_wordle_reply(guess: List[wordle.Letter]):
     if ''.join(letter.letter for letter in guess) == 'rainbow':
         return ''.join(
             format_wordle_letter(letter) + (
@@ -100,10 +100,10 @@ class TestBot(irc.bot.SingleServerIRCBot):
             self.wordle.restart()
             c.privmsg(
                 self.channel,
-                f'{format_wordle_hint(hint)}, congrats, {nick}, next word: {self.wordle.hint()}'
+                f'{format_wordle_reply(hint)}, congrats, {nick}, next word: {self.wordle.hint()}'
             )
         else:
-            c.privmsg(self.channel, format_wordle_hint(hint))
+            c.privmsg(self.channel, format_wordle_reply(hint))
 
 
 def main():
