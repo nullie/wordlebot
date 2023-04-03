@@ -1,5 +1,6 @@
 from typing import List
 import irc.bot
+import irc.client
 import irc.strings
 import irccodes
 
@@ -126,6 +127,8 @@ def main():
     nickname = sys.argv[3]
     word_dictionary = sys.argv[4]
     guess_dictionary = sys.argv[5]
+
+    irc.client.ServerConnection.buffer_class.errors = "replace"
 
     bot = TestBot(channel, nickname, server, port, word_dictionary, guess_dictionary)
     bot.start()
