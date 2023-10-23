@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "wordlebot"
+version = "0.1.0"
+description = ""
+authors = ["Ilia Novoselov <ilya.novselov@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+irc = "^20.3.0"
+irccodes = "^1.2.0"
+
+[tool.poetry.scripts]
+wordlebot = "wordlebot.__main__:main"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
