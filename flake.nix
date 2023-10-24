@@ -17,24 +17,25 @@
         overrides = pkgs.poetry2nix.overrides.withDefaults (
           self: super: {
             irccodes = super.irccodes.overridePythonAttrs (
-              old: {
+              {
                 format = "setuptools";
               }
             );
             autocommand = super.autocommand.overridePythonAttrs (
-              old: {
+              {
                 format = "setuptools";
               }
             );
             annotated-types = super.annotated-types.overridePythonAttrs (
-              old: {
-                format = "setuptools";
+              {
+                format = "other";
                 # nativeBuildInputs = [super.hatchling super.flake8];
                 dontBuild = true;
+                buildPhase = null;
               }
             );
             pydantic-core = super.annotated-types.overridePythonAttrs (
-              old: {
+              {
                 nativeBuildInputs = [pkgs.maturin];
               }
             );
