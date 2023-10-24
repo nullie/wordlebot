@@ -4,7 +4,7 @@ import irc.client
 import irc.strings
 import irccodes
 
-import wordle
+from . import wordle
 
 
 BACKGROUND_COLORS = {
