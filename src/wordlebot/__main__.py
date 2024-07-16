@@ -66,6 +66,11 @@ class TestBot(irc.bot.SingleServerIRCBot):
             pass
         else:
             self.react(e, correct, hint)
+            return
+
+        if irc.strings.lower(msg) == "w":
+            c.privmsg(self.channel, self.wordle.hint())
+            return
 
         if irc.strings.lower(msg).startswith("w "):
             self.do_command(e, msg[2:].strip())
