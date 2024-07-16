@@ -26,16 +26,16 @@ class Game:
         self.word = random.choice(list(self.words))
 
     def hint(self) -> str:
-        return f'{len(self.word)} letters'
+        return f"{len(self.word)} letters"
 
     def guess(self, guess: str) -> Tuple[bool, List[Letter]]:
         guess = guess.lower()
 
         if len(guess) != len(self.word):
-            raise GuessError(f'wrong length ({len(self.word)} letters)')
+            raise GuessError(f"wrong length ({len(self.word)} letters)")
 
         if guess not in self.guesses:
-            raise GuessError('not in the word list')
+            raise GuessError("not in the word list")
 
         word_counts = Counter(self.word)
         right_place = set()
@@ -54,10 +54,12 @@ class Game:
             Letter(
                 letter,
                 (
-                    Status.RIGHT_PLACE if i in right_place
-                    else Status.RIGHT_LETTER if i in right_letter
+                    Status.RIGHT_PLACE
+                    if i in right_place
+                    else Status.RIGHT_LETTER
+                    if i in right_letter
                     else Status.MISS
-                )
+                ),
             )
             for i, letter in enumerate(guess)
         ]
@@ -71,5 +73,5 @@ def load_good_words(dictionary: str) -> Iterator[str]:
     with open(dictionary) as f:
         for word in f:
             word = word.strip().lower()
-            if re.fullmatch('[a-z]+', word) and 4 <= len(word) <= 8:
+            if re.fullmatch("[a-z]+", word) and 4 <= len(word) <= 8:
                 yield word

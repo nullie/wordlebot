@@ -8,46 +8,42 @@ from . import wordle
 
 
 BACKGROUND_COLORS = {
-    wordle.Status.MISS: ('white', 'grey'),
-    wordle.Status.RIGHT_PLACE: ('white', 'green'),
-    wordle.Status.RIGHT_LETTER: ('black', 'yellow'),
+    wordle.Status.MISS: ("white", "grey"),
+    wordle.Status.RIGHT_PLACE: ("white", "green"),
+    wordle.Status.RIGHT_LETTER: ("black", "yellow"),
 }
 
 
 def format_wordle_letter(letter: wordle.Letter):
     return irccodes.colored(
-        ' ' + irccodes.bold(letter.letter) + ' ',
-        *BACKGROUND_COLORS[letter.status], '')
+        " " + irccodes.bold(letter.letter) + " ", *BACKGROUND_COLORS[letter.status], ""
+    )
 
 
 def format_wordle_reply(guess: List[wordle.Letter]):
-    if ''.join(letter.letter for letter in guess) == 'rainbow':
-        return ''.join(
-            format_wordle_letter(letter) + (
-                ''
-                if separator is None else
-                irccodes.colored(' ', color='black', background_color=separator, padding='')
+    if "".join(letter.letter for letter in guess) == "rainbow":
+        return "".join(
+            format_wordle_letter(letter)
+            + (
+                ""
+                if separator is None
+                else irccodes.colored(
+                    " ", color="black", background_color=separator, padding=""
+                )
             )
             for letter, separator in zip(
                 guess,
-                [
-                    'light red',
-                    'orange',
-                    'yellow',
-                    'green',
-                    'blue',
-                    'purple',
-                    None
-                ]
+                ["light red", "orange", "yellow", "green", "blue", "purple", None],
             )
-    )
-    return ' '.join(map(format_wordle_letter, guess))
+        )
+    return " ".join(map(format_wordle_letter, guess))
 
 
 class TestBot(irc.bot.SingleServerIRCBot):
-    def __init__(self, channel, nickname, server, port, word_dictionary, guess_dictionary):
-        irc.bot.SingleServerIRCBot.__init__(
-            self, [(server, port)], nickname, nickname)
+    def __init__(
+        self, channel, nickname, server, port, word_dictionary, guess_dictionary
+    ):
+        irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
         self.channel = channel
         self.wordle = wordle.Game(word_dictionary, guess_dictionary)
 
@@ -71,7 +67,7 @@ class TestBot(irc.bot.SingleServerIRCBot):
         else:
             self.react(e, correct, hint)
 
-        if irc.strings.lower(msg).startswith('w '):
+        if irc.strings.lower(msg).startswith("w "):
             self.do_command(e, msg[2:].strip())
             return
 
@@ -100,7 +96,7 @@ class TestBot(irc.bot.SingleServerIRCBot):
             self.wordle.restart()
             c.privmsg(
                 self.channel,
-                f'{format_wordle_reply(hint)}, congrats, {nick}, next word: {self.wordle.hint()}'
+                f"{format_wordle_reply(hint)}, congrats, {nick}, next word: {self.wordle.hint()}",
             )
         else:
             c.privmsg(self.channel, format_wordle_reply(hint))
@@ -110,7 +106,9 @@ def main():
     import sys
 
     if len(sys.argv) != 6:
-        print("Usage: testbot <server[:port]> <channel> <nickname> <word_dictionary> <guess_dictionary>")
+        print(
+            "Usage: testbot <server[:port]> <channel> <nickname> <word_dictionary> <guess_dictionary>"
+        )
         sys.exit(1)
 
     s = sys.argv[1].split(":", 1)
