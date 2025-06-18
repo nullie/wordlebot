@@ -112,7 +112,7 @@ def main():
 
     if len(sys.argv) != 6:
         print(
-            "Usage: testbot <server[:port]> <channel> <nickname> <word_dictionary> <guess_dictionary>"
+            "Usage: wordlebot <server[:port]> <channel> <nickname> <word_dictionary> <guess_dictionary>"
         )
         sys.exit(1)
 
