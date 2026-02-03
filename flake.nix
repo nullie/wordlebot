@@ -57,7 +57,7 @@
         # It's using https://pyproject-nix.github.io/pyproject.nix/build.html
       };
 
-      python = pkgs.python313;
+      python = pkgs.python314;
 
       pythonSet =
         # Use base package set from pyproject.nix builders

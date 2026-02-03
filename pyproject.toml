@@ -3,7 +3,7 @@ name = "wordlebot"
 version = "0.1.1"
 description = ""
 authors = [{ name = "Ilia Novoselov", email = "ilya.novoselov@gmail.com" }]
-requires-python = "~=3.13"
+requires-python = ">= 3.13, < 3.15"
 dependencies = [
     "irc>=20.5.0,<21",
     "irccodes>=1.2.0,<2",
